@@ -3,17 +3,17 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use App\Repositories\Chat\ChatRepository;
+use App\Repositories\Gemini\GeminiRepository;
 use Illuminate\Support\Facades\Http;
 
-class ChatRepositoryTest extends TestCase
+class GeminiRepositoryTest extends TestCase
 {
-    protected $chatRepository;
+    protected $geminiRepository;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->chatRepository = new ChatRepository();
+        $this->geminiRepository = new GeminiRepository();
     }
 
     public function test_get_chat_response_returns_mocked_api_response()
@@ -23,7 +23,7 @@ class ChatRepositoryTest extends TestCase
                 Http::response(['candidates' => [['content' => ['parts' => [['text' => 'Hello, how can I help?']]]]]], 200)
         ]);
 
-        $response = $this->chatRepository->getResponse('Hello');
+        $response = $this->geminiRepository->getResponse('Hello');
 
         $this->assertIsArray($response);
         $this->assertArrayHasKey('message', $response);

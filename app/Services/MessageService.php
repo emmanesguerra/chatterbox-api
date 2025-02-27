@@ -17,11 +17,7 @@ class MessageService
 
     public function createMessage(array $data): Message
     {
-        return $this->messageRepository->create([
-            'conversation_id' => $data['conversation_id'],
-            'sender' => $data['sender'],
-            'message' => $data['message']
-        ]);
+        return $this->messageRepository->create($data);
     }
 
     public function deleteMessage(int $messageId): bool

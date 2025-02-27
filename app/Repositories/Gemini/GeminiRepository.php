@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Repositories\Chat;
+namespace App\Repositories\Gemini;
 
-use App\Services\GeminiService;
 use Illuminate\Support\Facades\Http;
 
-class ChatRepository implements ChatRepositoryInterface
+class GeminiRepository implements GeminiRepositoryInterface
 {
     protected $baseUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
     protected $apiKey;

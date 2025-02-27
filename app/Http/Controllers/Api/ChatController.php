@@ -4,24 +4,24 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChatRequest;
-use App\Services\ChatService;
+use App\Services\GeminiService;
 use App\Services\MessageService;
 use Illuminate\Http\JsonResponse;
 
 class ChatController extends Controller
 {
-    protected $chatService;
+    protected $geminiService;
     protected $messageService;
 
-    public function __construct(ChatService $chatService, MessageService $messageService)
+    public function __construct(GeminiService $geminiService, MessageService $messageService)
     {
-        $this->chatService = $chatService;
+        $this->geminiService = $geminiService;
         $this->messageService = $messageService;
     }
 
-    public function chat(ChatRequest $request): JsonResponse
+    public function processMessage(ChatRequest $request): JsonResponse
     {
-        $response = $this->chatService->chat($request->input('message'));
+        $response = $this->geminiService->getResponse($request->input('message'));
 
         if($response) {
 

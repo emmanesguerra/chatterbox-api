@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Repositories\Chat\ChatRepositoryInterface;
-use App\Repositories\Chat\ChatRepository;
+use App\Repositories\Gemini\GeminiRepositoryInterface;
+use App\Repositories\Gemini\GeminiRepository;
 use App\Repositories\Conversation\ConversationRepositoryInterface;
 use App\Repositories\Conversation\ConversationRepository;
 use App\Repositories\Message\MessageRepositoryInterface;
@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(ChatRepositoryInterface::class, ChatRepository::class);
+        $this->app->bind(GeminiRepositoryInterface::class, GeminiRepository::class);
         $this->app->bind(ConversationRepositoryInterface::class, ConversationRepository::class);
         $this->app->bind(MessageRepositoryInterface::class, MessageRepository::class);
     }
