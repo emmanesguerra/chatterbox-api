@@ -18,7 +18,7 @@ class ConversationController extends Controller
 
     public function create(ConversationRequest $request): JsonResponse
     {
-        $response = $this->conversationService->createConversation($request->input('title'));
+        $response = $this->conversationService->createConversation($request->input('message'));
 
         return response()->json($response);
     }
