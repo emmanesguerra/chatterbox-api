@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Repositories\Chat;
+namespace App\Services;
 
-use App\Services\GeminiService;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
-class ChatRepository implements ChatRepositoryInterface
+class GeminiService
 {
     protected $baseUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
     protected $apiKey;
@@ -24,10 +24,20 @@ class ChatRepository implements ChatRepositoryInterface
         ]);
 
         $data = $response->json();
+
+        $content = Str::markdown($data['candidates'][0]['content']['parts'][0]['text'] ?? 'No response');
         
         return [
-            'message' => $data['candidates'][0]['content']['parts'][0]['text'] ?? 'No response'
+            'message' => $content
         ];
     }
-}
 
+    public function getTitle(string $message): string
+    {
+        $command = "Give one conversation title out of this message \"$message\"";  
+
+        $reponse = $this->getResponse($command);
+
+        return $reponse['message'];
+    }
+}

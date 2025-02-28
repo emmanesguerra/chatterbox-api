@@ -3,10 +3,11 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use App\Services\ChatService;
+use App\Services\GeminiService;
 use Mockery;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Testing\Fluent\AssertableJson;
 
 class ChatControllerTest extends TestCase
 {
@@ -17,39 +18,48 @@ class ChatControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->chatServiceMock = Mockery::mock(ChatService::class);
-        $this->app->instance(ChatService::class, $this->chatServiceMock);
+        $this->geminiServiceMock = Mockery::mock(GeminiService::class);
+        $this->app->instance(GeminiService::class, $this->geminiServiceMock);
     }
 
     public function test_chat_endpoint_returns_json_response()
     {
-        $this->chatServiceMock
-            ->shouldReceive('chat')
+        $this->geminiServiceMock
+            ->shouldReceive('getResponse')
             ->once()
             ->with('Hello mate')
             ->andReturn(['message' => 'Hello, how can I help?']);
 
-        $response = $this->postJson('/api/chat', ['message' => 'Hello mate']);
-
-        $response->assertStatus(200);
-        $response->assertJson([
-            'message' => 'Hello, how can I help?'
+        $response = $this->postJson('/api/send-message', [
+            'message' => 'Hello mate',
+            'conversation_id' => 1,
         ]);
+
+        $response->assertStatus(200)
+            ->assertJson(fn (AssertableJson $json) =>
+                $json->has('message')
+            );
     }
 
     public function test_chat_endpoint_returns_error_due_to_empty_message()
     {
-        $response = $this->postJson('/api/chat', ['message' => '']);
+        $response = $this->postJson('/api/send-message', [
+            'message' => '',
+            'conversation_id' => 1,
+        ]);
 
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['message']);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['message']);
     }
 
     public function test_chat_endpoint_returns_error_due_to_incorect_field()
     {
-        $response = $this->postJson('/api/chat', ['messages' => 'Hi how are you?']);
+        $response = $this->postJson('/api/send-message', [
+            'messages' => 'Hi how are you?',
+            'conversation_id' => 1,
+        ]);
 
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['message']);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['message']);
     }
 }
