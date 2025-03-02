@@ -6,6 +6,7 @@ use App\Repositories\Conversation\ConversationRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Conversation;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Collection;
 
 class ConversationService
 {
@@ -16,6 +17,11 @@ class ConversationService
     {
         $this->conversationRepository = $conversationRepository;
         $this->geminiService = $geminiService;
+    }
+
+    public function getConversations(): Collection
+    {
+        return $this->conversationRepository->getConversations();
     }
 
     public function createConversation(string $title): Conversation
@@ -35,5 +41,10 @@ class ConversationService
     public function restoreConversation(int $conversationId): bool
     {
         return $this->conversationRepository->restore($conversationId);
+    }
+
+    public function getMessages(int $conversationId): Collection
+    {
+        return $this->conversationRepository->getMessages($conversationId);
     }
 }

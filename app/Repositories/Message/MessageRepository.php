@@ -3,23 +3,12 @@
 namespace App\Repositories\Message;
 
 use App\Models\Message;
+use App\Repositories\BaseRepository;
 
-class MessageRepository  implements MessageRepositoryInterface
+class MessageRepository extends BaseRepository implements MessageRepositoryInterface
 {
-    public function create(array $data): Message
+    public function __construct(Message $model)
     {
-        return Message::create($data);
-    }
-
-    public function delete(int $id): bool
-    {
-        $message = $this->findById($id);
-        return $message ? $message->delete() : false;
-    }
-
-    public function restore(int $id): bool
-    {
-        $message = $this->findByIdWithTrashed($id);
-        return $message ? $message->restore() : false;
+        parent::__construct($model);
     }
 }
