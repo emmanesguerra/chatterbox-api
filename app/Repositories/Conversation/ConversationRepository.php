@@ -3,28 +3,24 @@
 namespace App\Repositories\Conversation;
 
 use App\Models\Conversation;
+use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Collection;
 
-class ConversationRepository  implements ConversationRepositoryInterface
+class ConversationRepository extends BaseRepository implements ConversationRepositoryInterface
 {
-    public function getConversations(): array
+    public function __construct(Conversation $model)
     {
-        return Conversation::all()->toArray();
+        parent::__construct($model);
     }
 
-    public function create(array $data): Conversation
+    public function getConversations(): Collection
     {
-        return Conversation::create($data);
+        return $this->model->all();
     }
 
-    public function delete(int $id): bool
+    public function getMessages(int $id): Collection
     {
         $conversation = $this->findById($id);
-        return $conversation ? $conversation->delete() : false;
-    }
-
-    public function restore(int $id): bool
-    {
-        $conversation = $this->findByIdWithTrashed($id);
-        return $conversation ? $conversation->restore() : false;
+        return $conversation ? $conversation->messages : collect();
     }
 }
