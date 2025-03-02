@@ -38,4 +38,15 @@ class ConversationController extends Controller
 
         return response()->json($response);
     }
+
+    public function destroy(int $id): JsonResponse
+    {
+        $deleted = $this->conversationService->deleteConversation($id);
+    
+        if (!$deleted) {
+            return response()->json(['message' => 'Conversation not found.'], 404);
+        }
+    
+        return response()->json(['message' => 'Conversation deleted successfully.'], 200);
+    }
 }

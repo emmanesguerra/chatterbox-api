@@ -33,7 +33,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         $model = $this->findById($id);
         return $model ? $model->delete() : false;
     }
-
+    
     public function restore(int $id): bool
     {
         $model = $this->findByIdWithTrashed($id);

@@ -8,3 +8,4 @@ Route::post('/send-message', [ChatController::class, 'processMessage']);
 Route::post('/conversations-create', [ConversationController::class, 'create']);
 Route::get('/conversations', [ConversationController::class, 'lists']);
 Route::get('/conversations/{conversation}/messages', [ConversationController::class, 'fetchMessages']);
+Route::delete('/conversations/{id}', [ConversationController::class, 'destroy']);
