@@ -36,7 +36,7 @@ class ConversationController extends Controller
     {
         $response = $this->conversationService->createConversation($request->input('message'));
 
-        return response()->json($response);
+        return response()->json($response, 201);
     }
 
     public function destroy(int $id): JsonResponse
