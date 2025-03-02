@@ -34,7 +34,7 @@ class GeminiService
 
     public function getTitle(string $message): string
     {
-        $command = "Give one conversation title out of this message \"$message\"";  
+        $command = "Generate one title out of this message \"$message\", title should be less than 5 words";  
 
         $reponse = $this->getResponse($command);
 

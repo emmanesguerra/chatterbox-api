@@ -6,6 +6,11 @@ use App\Models\Conversation;
 
 class ConversationRepository  implements ConversationRepositoryInterface
 {
+    public function getConversations(): array
+    {
+        return Conversation::all()->toArray();
+    }
+
     public function create(array $data): Conversation
     {
         return Conversation::create($data);

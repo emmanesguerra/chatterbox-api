@@ -16,6 +16,13 @@ class ConversationController extends Controller
         $this->conversationService = $conversationService;
     }
 
+    public function lists(): JsonResponse
+    {
+        $response = $this->conversationService->getConversations();
+
+        return response()->json($response);
+    }
+
     public function create(ConversationRequest $request): JsonResponse
     {
         $response = $this->conversationService->createConversation($request->input('message'));

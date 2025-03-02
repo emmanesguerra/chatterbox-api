@@ -18,6 +18,11 @@ class ConversationService
         $this->geminiService = $geminiService;
     }
 
+    public function getConversations(): array
+    {
+        return $this->conversationRepository->getConversations();
+    }
+
     public function createConversation(string $title): Conversation
     {
         $cleanText = preg_replace('/[\r\n\t]+/', ' ', html_entity_decode(strip_tags($this->geminiService->getTitle($title))));
