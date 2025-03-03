@@ -8,7 +8,7 @@ Chatterbox API is a backend service built with **Laravel** to support real-time 
 - **RESTful API** for managing conversations and messages  
 - **Service & Repository pattern** for scalable business logic data handling
 
-## 📚 Project Structure  
+## 📂 Project Structure  
 The `app/` directory contains the core logic of the Chatterbox API.  
 
 ```
@@ -86,7 +86,7 @@ To use the chatbot features powered by Gemini, you need to provide your own **Ge
    GEMINI_API_KEY=your_api_key_here
 
 
-### 📌 API Endpoints  
+### 🌐 API Endpoints  
 
 | Method  | Endpoint                                    | Controller                            | Description                                       |
 |---------|---------------------------------------------|---------------------------------------|---------------------------------------------------|
@@ -96,8 +96,10 @@ To use the chatbot features powered by Gemini, you need to provide your own **Ge
 | `GET`   | `/conversations/{conversation}/messages`    | `ConversationController@fetchMessages`| Retrieves messages for a specific conversation.   |
 | `DELETE`| `/conversations/{id}`                       | `ConversationController@destroy`      | Deletes a conversation by ID.                     |
 
+
 ### 👥 Contributors
 - [Emmanuelle Esguerra](https://github.com/emmanesguerra)
 
-## 🐜 Disclaimer  
+
+### 🐜 Disclaimer  
 This project is intended for **practice purposes only** and is not recommended for production use.  
