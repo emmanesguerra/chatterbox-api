@@ -21,6 +21,6 @@ class ConversationRepository extends BaseRepository implements ConversationRepos
     public function getMessages(int $id): Collection
     {
         $conversation = $this->findById($id);
-        return $conversation ? $conversation->messages : collect();
+        return $conversation ? $conversation->messages : new Collection();
     }
 }
