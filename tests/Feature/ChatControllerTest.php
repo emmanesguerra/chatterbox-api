@@ -28,7 +28,10 @@ class ChatControllerTest extends TestCase
             ->shouldReceive('getResponse')
             ->once()
             ->with('Hello mate')
-            ->andReturn(['message' => 'Hello, how can I help?']);
+            ->andReturn([
+                'message' => 'Hello, how can I help?',
+                'success' => true,
+            ]);
 
         $response = $this->postJson('/api/send-message', [
             'message' => 'Hello mate',
@@ -38,6 +41,7 @@ class ChatControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertJson(fn (AssertableJson $json) =>
                 $json->has('message')
+                     ->has('success')
             );
     }
 
