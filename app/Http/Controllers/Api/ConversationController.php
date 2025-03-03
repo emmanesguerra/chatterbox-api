@@ -44,9 +44,12 @@ class ConversationController extends Controller
         $deleted = $this->conversationService->deleteConversation($id);
     
         if (!$deleted) {
-            return response()->json(['message' => 'Conversation not found.'], 404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Conversation not found.'
+            ], 404);
         }
     
-        return response()->json(['message' => 'Conversation deleted successfully.'], 200);
+        return response()->json([], 204);
     }
 }
