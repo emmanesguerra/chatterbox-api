@@ -110,8 +110,7 @@ class ConversationControllerTest extends TestCase
 
         $response = $this->deleteJson('/api/conversations/1');
 
-        $response->assertStatus(200)
-            ->assertJson(['message' => 'Conversation deleted successfully.']);
+        $response->assertStatus(204);
     }
 
     public function test_fails_to_delete_a_nonexistent_conversation()

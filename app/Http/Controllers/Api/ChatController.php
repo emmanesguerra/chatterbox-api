@@ -23,7 +23,7 @@ class ChatController extends Controller
     {
         $response = $this->geminiService->getResponse($request->input('message'));
 
-        if($response) {
+        if(isset($response['success']) && $response['success']) {
 
             $this->messageService->createMessage([
                 'conversation_id' => $request->input('conversation_id'),
@@ -36,7 +36,7 @@ class ChatController extends Controller
                 'sender' => 'bot',
                 'message' => $response['message']
             ]);
-        }
+        } 
 
         return response()->json($response);
     }
