@@ -23,7 +23,7 @@ class ExceptionHandler
         $exceptions->render(function (ValidationException $exception, $request) {
             return response()->json([
                 'success' => false,
-                'message' => 'Validation error',
+                'message' => "Something went wrong with your input. Please check and try again.",
                 'errors' => $exception->errors(),
             ], 422);
         });
@@ -31,28 +31,28 @@ class ExceptionHandler
         $exceptions->render(function (NotFoundHttpException $exception, $request) {
             return response()->json([
                 'success' => false,
-                'message' => 'Route not found',
+                'message' => "We couldn’t find what you were looking for. The page or resource might be missing.",
             ], 404);
         });
 
         $exceptions->render(function (AccessDeniedHttpException $exception, $request) {
             return response()->json([
                 'success' => false,
-                'message' => 'Access denied',
+                'message' => "You don’t have permission to access this resource. Please check your access rights.",
             ], 403);
         });
 
         $exceptions->render(function (MethodNotAllowedHttpException $exception, $request) {
             return response()->json([
                 'success' => false,
-                'message' => 'HTTP method not allowed',
+                'message' => "The method you tried is not supported for this action. Please use the correct method.",
             ], 405);
         });
 
         $exceptions->render(function (RequestException $exception, $request) {
             return response()->json([
                 'success' => false,
-                'message' => 'API request failed',
+                'message' => "Something went wrong while communicating with the server. Please try again later.",
                 'error' => config('app.debug') ? $exception->getMessage() : null
             ], 500);
         });
@@ -60,7 +60,7 @@ class ExceptionHandler
         $exceptions->render(function (QueryException $exception, $request) {
             return response()->json([
                 'success' => false,
-                'message' => 'Database error',
+                'message' => "There was an issue with our database. Please try again.",
                 'error' => config('app.debug') ? $exception->getMessage() : null
             ], 500);
         });
@@ -68,21 +68,21 @@ class ExceptionHandler
         $exceptions->render(function (HttpException $exception, $request) {
             return response()->json([
                 'success' => false,
-                'message' => $exception->getMessage(),
+                'message' => "Something went wrong while processing your request. Please try again later.",
             ], $exception->getStatusCode());
         });
 
         $exceptions->render(function (RuntimeException $exception, $request) {
             return response()->json([
                 'success' => false,
-                'message' => $exception->getMessage(),
+                'message' => "Something unexpected happened. Please try again later.",
             ], 500);
         });
 
         $exceptions->render(function (Throwable $exception, $request) {
             return response()->json([
                 'success' => false,
-                'message' => 'An unexpected error occurred',
+                'message' => "An unexpected error occurred. We are looking into it.",
                 'error' => config('app.debug') ? $exception->getMessage() : null
             ], 500);
         });
